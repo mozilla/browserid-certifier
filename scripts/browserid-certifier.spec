@@ -27,10 +27,11 @@ export PATH=$PWD/node_modules/.bin:$PATH
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_rootdir}
-for f in bin lib *.json; do
+for f in bin node_modules lib *.json; do
     cp -rp $f %{buildroot}%{_rootdir}/
 done
 mkdir -p %{buildroot}%{_rootdir}/config
+cp config/local.json-dist %{buildroot}%{_rootdir}/config/local.json
 
 %clean
 rm -rf %{buildroot}
@@ -38,7 +39,10 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{_rootdir}
+%config %{_rootdir}/config/local.json
 
 %changelog
+* Mon Jun 18 2012 David Caro <david.caro.estevez@gmail.com>
+- Added a default config file and the required node modules to the installation
 * Fri Jun  8 2012 Pete Fritchman <petef@mozilla.com>
 - Initial version

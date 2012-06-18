@@ -9,8 +9,8 @@ progname=$(basename $0)
 
 cd $(dirname $0)/..    # top level of the checkout
 
-mkdir -p rpmbuild/SOURCES rpmbuild/SPECS rpmbuild/SOURCES
 rm -rf rpmbuild/RPMS rpmbuild/SOURCES/browserid
+mkdir -p rpmbuild/{SOURCES,SPECS,SOURCES,SRPMS,RPMS/x86_64}
 
 tar --exclude rpmbuild --exclude .git \
     --exclude var -czf \
