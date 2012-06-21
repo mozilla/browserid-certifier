@@ -27,7 +27,7 @@ export PATH=$PWD/node_modules/.bin:$PATH
 %install
 rm -rf %{buildroot}
 mkdir -p %{buildroot}%{_rootdir}
-for f in bin lib *.json; do
+for f in bin lib node_modules *.json; do
     cp -rp $f %{buildroot}%{_rootdir}/
 done
 mkdir -p %{buildroot}%{_rootdir}/config
