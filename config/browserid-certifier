@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Startup script for Browserid Certifier Servlet Engine
+# Startup script for BrowserID Certifier
 #
 # chkconfig: 345 86 14
-# description: Browserid Certifier Servlet Engine
+# description: BrowserID Certifier
 # processname: certifier
 # pidfile: /opt/certifier/var/run/certifier.pid
 #
