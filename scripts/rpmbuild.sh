@@ -10,7 +10,7 @@ progname=$(basename $0)
 cd $(dirname $0)/..    # top level of the checkout
 
 rm -rf rpmbuild/RPMS rpmbuild/SOURCES/browserid
-mkdir -p rpmbuild/{SOURCES,SPECS,SOURCES,SRPMS,RPMS/x86_64}
+mkdir -p rpmbuild/{BUILD,SOURCES,SPECS,SOURCES,SRPMS,RPMS/x86_64}
 
 tar --exclude rpmbuild --exclude .git \
     --exclude var -czf \
@@ -20,6 +20,7 @@ set +e
 
 export GIT_REVISION=$(git log -1 --oneline)
 rpmbuild --define "_topdir $PWD/rpmbuild" \
+         --define "rev ${GIT_REVISION%% *}" \
          -ba scripts/browserid-certifier.spec
 rc=$?
 if [[ $rc -eq 0 ]]; then

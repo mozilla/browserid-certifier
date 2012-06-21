@@ -2,7 +2,7 @@
 
 Name:          browserid-certifier
 Version:       0.2012.05.25
-Release:       1%{?dist}
+Release:       1%{?dist}_%{rev}
 Summary:       BrowserID Certifier
 Packager:      Pete Fritchman <petef@mozilla.com>
 Group:         Development/Libraries
