@@ -4,8 +4,8 @@
 #
 # chkconfig: 345 86 14
 # description: Browserid Certifier Servlet Engine
-# processname: tomcat
-# pidfile: /usr/local/jakarta-tomcat/bin/tomcat.pid
+# processname: certifier
+# pidfile: /opt/certifier/var/run/certifier.pid
 #
 if [ -f /etc/init.d/functions ]; then . /etc/init.d/functions; fi
 if [ -f /lib/lsb/init-functions ]; then . /lib/lsb/init-functions; fi
