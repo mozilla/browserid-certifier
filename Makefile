@@ -8,7 +8,7 @@ clean:
 npm:
 	npm install
 
-rpm: npm
+rpm:
 	scripts/rpmbuild.sh
 
 test: npm

@@ -19,11 +19,10 @@ tar --exclude rpmbuild --exclude .git \
 set +e
 
 export GIT_REVISION=$(git log -1 --oneline)
-
 rpmbuild --define "_topdir $PWD/rpmbuild" \
          -ba scripts/browserid-certifier.spec
 rc=$?
-if [ $rc -eq 0 ]; then
+if [[ $rc -eq 0 ]]; then
     ls -l $PWD/rpmbuild/RPMS/*/*.rpm
 else
     echo "$progname: failed to build certifier RPM (rpmbuild rc=$rc)" >&2

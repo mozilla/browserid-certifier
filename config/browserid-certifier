@@ -1,0 +1,85 @@
+#!/bin/bash
+#
+# Startup script for Browserid Certifier Servlet Engine
+#
+# chkconfig: 345 86 14
+# description: Browserid Certifier Servlet Engine
+# processname: tomcat
+# pidfile: /usr/local/jakarta-tomcat/bin/tomcat.pid
+#
+if [ -f /etc/init.d/functions ]; then . /etc/init.d/functions; fi
+if [ -f /lib/lsb/init-functions ]; then . /lib/lsb/init-functions; fi
+umask 002
+
+CMD="/opt/certifier/bin/certifier"
+NAME="BrowserID Certifier"
+PIDFILE="/opt/certifier/var/run/certifier.pid"
+## Status return codes (http://refspecs.linuxbase.org/LSB_3.1.1/LSB-Core-generic/LSB-Core-generic/iniscrptact.html)
+STAT_OK=0
+STAT_NOK_PID=1
+STAT_NOK_LOCK=2
+STAT_NOK=3
+STAT_UNK=4
+# User under which the program will run (actually current user)
+RUNAS_USER="$(id -un)"
+
+## Make sure that the pidfile dir exists
+[[ -d "$(dirname $PIDFILE)" ]] \
+|| mkdir -p $(dirname $PIDFILE) \
+|| {
+    log_failure_msg "Unable to create pidfile directory $(dirname $PIDFILE)."
+    exit 1
+}
+
+start() {
+    pid="$(pidofproc -p $PIDFILE $CMD)" \
+    && log_warning_msg "$NAME: Already started (pid=$pid)." \
+    && return 0
+    daemon --user $RUNAS_USER --pidfile "$PIDFILE" "$CMD & echo \$! > $PIDFILE" \
+    && log_success_msg "$NAME: Started (pid=$(pidofproc -p $PIDFILE $CMD))." \
+    || {
+        log_failure_msg "Unable to start $NAME."
+        return 1
+    }
+}
+
+stop() {
+    pidofproc -p $PIDFILE $CMD &>/dev/null \
+    || {
+        echo "$NAME already stopped."
+        return 0
+    }
+    killproc -p $PIDFILE $CMD
+    log_success_msg "$NAME: Stopped"
+}
+
+status() {
+    pid="$(pidofproc -p $PIDFILE $CMD)"
+    ret=$?
+    case $ret in
+        0) echo "$NAME: Running (pid=$pid).";;
+        1) echo "$NAME: Stopped but pid file $PIDFILE exists and has the pid $(cat $PIDFILE).";;
+        2) echo "$NAME: Stopped but lock file exists.";;
+        3) echo "$NAME: Stopped.";;
+        *) echo "$NAME: seems stopped, but something strange happend... the return core os pidofproc is $ret."
+    esac
+    return $ret
+}
+
+########################################
+##   MAIN
+########################################
+
+case "$1" in
+ start) start;;
+ stop) stop;;
+ restart|*reload) stop; start;;
+ status) status;;
+ *)
+       echo $"Usage: $0 {start|stop|restart|reload|force-reload|status}"
+       exit 1
+esac
+
+exit $?
+
+

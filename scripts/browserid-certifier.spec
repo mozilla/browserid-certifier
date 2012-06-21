@@ -32,6 +32,8 @@ for f in bin node_modules lib *.json; do
 done
 mkdir -p %{buildroot}%{_rootdir}/config
 cp config/local.json-dist %{buildroot}%{_rootdir}/config/local.json
+mkdir -p %{buildroot}/etc/init.d
+cp config/browserid-certifier %{buildroot}/etc/init.d/
 
 %clean
 rm -rf %{buildroot}
@@ -40,8 +42,12 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 %{_rootdir}
 %config %{_rootdir}/config/local.json
+/etc/init.d/browserid-certifier
+
 
 %changelog
+* Mon Jun 21 2012 David Caro <david.caro.estevez@gmail.com>
+- Added init script
 * Mon Jun 18 2012 David Caro <david.caro.estevez@gmail.com>
 - Added a default config file and the required node modules to the installation
 * Fri Jun  8 2012 Pete Fritchman <petef@mozilla.com>
