@@ -14,6 +14,7 @@ umask 002
 CMD="/opt/certifier/bin/certifier"
 NAME="BrowserID Certifier"
 PIDFILE="/opt/certifier/var/run/certifier.pid"
+LOGFILE="/opt/certifier/var/log/browserid-certifier.log"
 ## Status return codes (http://refspecs.linuxbase.org/LSB_3.1.1/LSB-Core-generic/LSB-Core-generic/iniscrptact.html)
 STAT_OK=0
 STAT_NOK_PID=1
@@ -35,7 +36,7 @@ start() {
     pid="$(pidofproc -p $PIDFILE $CMD)" \
     && log_warning_msg "$NAME: Already started (pid=$pid)." \
     && return 0
-    daemon --user $RUNAS_USER --pidfile "$PIDFILE" "$CMD & echo \$! > $PIDFILE" \
+    daemon --user $RUNAS_USER --pidfile "$PIDFILE" "$CMD 1>>$LOGFILE 2>&1 & echo \$! > $PIDFILE" \
     && log_success_msg "$NAME: Started (pid=$(pidofproc -p $PIDFILE $CMD))." \
     || {
         log_failure_msg "Unable to start $NAME."
