@@ -57,7 +57,7 @@ describe('ephemeral keys', function() {
 
 describe('the server', function() {
   it('should start up', function(done) {
-    server = require('./bin/keysigner');    
+    server = require('./bin/certifier');    
 
     server(function(err, port) {
       should.not.exist(err);

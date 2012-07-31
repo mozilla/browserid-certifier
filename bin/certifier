@@ -52,7 +52,7 @@ server.post('/cert_key', function(req, res) {
     email: req.body.email,
     pubkey: req.body.pubkey,
     duration: req.body.duration,
-    hostname: config.get('hostname')
+    hostname: config.get('issuer_hostname')
   }, function(err, certificate) {
     var ro = { };
     if (err) {
@@ -68,7 +68,7 @@ server.post('/cert_key', function(req, res) {
 });
 
 // Ops
-server.get('/__heartbeat__', function (req, res) { res.send('ok')});
+server.get('/__heartbeat__', function (req, res) { res.send('ok certifier')});
 server.get('/public-key', function (req, res) {
   keys.pubkey(function (err, publicKey) {
     res.contentType('application/json');

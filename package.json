@@ -7,7 +7,7 @@
     "convict": "0.0.6",
     "cjson": "0.0.6",
     "express": "2.5.9",
-    "jwcrypto": "0.2.2",
+    "jwcrypto": "0.3.1",
     "optimist": "0.3.4",
     "temp": "0.4.0",
     "winston": "0.5.11"

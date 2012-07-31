@@ -1,8 +1,8 @@
 %define _rootdir /opt/certifier
 
 Name:          browserid-certifier
-Version:       0.2012.05.25
-Release:       1%{?dist}_%{rev}
+Version:       %{ver}
+Release:       %{rel}
 Summary:       BrowserID Certifier
 Packager:      Pete Fritchman <petef@mozilla.com>
 Group:         Development/Libraries
@@ -26,13 +26,13 @@ export PATH=$PWD/node_modules/.bin:$PATH
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}%{_rootdir}
-for f in bin lib node_modules *.json; do
-    cp -rp $f %{buildroot}%{_rootdir}/
+for folder in %{_rootdir}/config /etc/init.d/; do
+    mkdir -p %{buildroot}$folder
 done
-mkdir -p %{buildroot}%{_rootdir}/config
+for folder in bin lib node_modules *.json; do
+    [[ -d $folder ]] && cp -rp $folder %{buildroot}%{_rootdir}/
+done
 cp config/local.json-dist %{buildroot}%{_rootdir}/config/local.json
-mkdir -p %{buildroot}/etc/init.d
 cp config/browserid-certifier %{buildroot}/etc/init.d/
 
 %clean

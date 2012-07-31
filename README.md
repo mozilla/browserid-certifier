@@ -50,7 +50,7 @@ You must create a config file. Example ``config/local.json``
 
     {
       "ip": "0.0.0.0",
-      "hostname": "dev.bigtent.mozilla.org",
+      "issuer_hostname": "dev.bigtent.mozilla.org",
       "port": 8080,
       "pub_key_path": "var/key.publickey",
       "priv_key_path": "var/key.secretkey"
@@ -63,16 +63,19 @@ The Certifier, requires both a private and public keypair.
 
 Do the following:
 
+    mkdir var
     cd var/
     ../node_modules/.bin/generate-keypair
     ls
-    cd var/
 
 You should now see a ``key.publickey`` and ``key.secretkey``
 in the directory. This matches your local.json config.
 
 You'll also want to import or re-use this ``key.publickey`` in
 your IdP's ``/.well-known/browserid`` file.
+
+    cd ..
+    ./scripts/gen_well_known_browserid.py var/key.publickey > /some/path/www/.well-known/browserid
 
 Running Certifier
 -----------------
