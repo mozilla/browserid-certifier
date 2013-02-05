@@ -1,7 +1,7 @@
 %define _rootdir /opt/certifier
 
 Name:          browserid-certifier
-Version:       0.2012.07.19
+Version:       0.2013.02.14
 Release:       1%{?dist}
 Summary:       BrowserID Certifier
 Packager:      Pete Fritchman <petef@mozilla.com>
