@@ -57,7 +57,7 @@ describe('ephemeral keys', function() {
 
 describe('the server', function() {
   it('should start up', function(done) {
-    server = require('./bin/certifier');    
+    server = require('./bin/certifier');
 
     server(function(err, port) {
       should.not.exist(err);
@@ -85,6 +85,7 @@ describe('key generation', function() {
 });
 
 describe('key certification', function() {
+  var now = new Date();
   it('should work', function(done) {
     doRequest({
       duration: (6 * 60 * 60 * 1000), // 6 hours
@@ -97,6 +98,12 @@ describe('key certification', function() {
       res.on('end', function() {
         body = JSON.parse(body);
         body.success.should.equal(true);
+
+        // We expected issued at 10 seconds ago + or - 2 seconds for Travis
+        var before = now.valueOf() - (11 * 1000);
+        var after = now.valueOf() - (9 * 1000);
+        var c = jwcrypto.extractComponents(body.certificate);
+        (before < c.payload.iat && c.payload.iat < after).should.be.true;
 
         done();
       });
