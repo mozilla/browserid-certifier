@@ -42,7 +42,7 @@ Installation
 
 Either npm or git should work:
 
-    npm install git@github.com:mozilla/browserid-bigtent.git
+    npm install git@github.com:mozilla/browserid-certifier.git
 
 or
 
@@ -63,8 +63,8 @@ You must create a config file. Example ``config/local.json``
       "priv_key_path": "var/key.secretkey"
     }
 
-Generating the Keypar
----------------------
+Generating the Keypair
+----------------------
 Both your IdP service and the Certifier must share a public key.
 The Certifier, requires both a private and public keypair.
 
