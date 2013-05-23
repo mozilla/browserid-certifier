@@ -14,7 +14,7 @@ require('../lib/logging-config.js');
 const 
 express = require('express'),
 config = require('../lib/config.js'),
-certify = require('../lib/certify.js'),
+certify = require('../lib/cert-compute.js'),
 keys = require('../lib/keys');
 
 var server = express.createServer(
