@@ -77,8 +77,10 @@ server.get('/public-key', function (req, res) {
 });
 
 // handle starting from the command line or the test harness
-if (process.argv[1] === __filename) {
-  server.listen(config.get('port'), config.get('ip'));
+if (path.basename(process.argv[1]) === path.basename(__filename)) {
+  server.listen(config.get('port'), config.get('ip'), function(err) {
+    console.log('Certifier started, listening at', config.get('ip'), 'on', server.address().port);
+  });
 } else {
   module.exports = function(cb) {
     server.listen(config.get('port'), function(err) {
