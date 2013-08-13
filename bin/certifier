@@ -11,7 +11,7 @@ process.chdir(path.dirname(__dirname));
 
 require('../lib/logging-config.js');
 
-const 
+const
 express = require('express'),
 config = require('../lib/config.js'),
 certify = require('../lib/cert-compute.js'),
@@ -23,9 +23,9 @@ var server = express.createServer(
 
 server.post('/cert_key', function(req, res) {
   // validate optional 'duration' parameter
-  if (!req.body.duration) {
-    req.body.duration = config.get('certificate_validity_ms');
-  } else if (typeof req.body.duration !== 'number') {
+  var duration = req.body.duration || config.get('certificate_validity_ms');
+  duration = parseInt(duration, 10); // accept numerical strings
+  if (isNaN(duration)) {
     return res.json({
       success: false,
       reason: 'duration argument must be a number when present'
