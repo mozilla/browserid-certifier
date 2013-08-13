@@ -111,9 +111,20 @@ describe('key certification', function() {
     });
   });
 
-  it('should fail when duration is not a number', function(done) {
+  it('should accept numerical strings for duration', function(done) {
     doRequest({
       duration: (6 * 60 * 60 * 1000).toString(), // 6 hours
+      pubkey: keyPair.publicKey.serialize(),
+      email: 'lloyd@example.com'
+    }, function(res) {
+      (res.statusCode).should.equal(200);
+      done();
+    });
+  });
+
+  it('should fail if duration is not numeric', function(done) {
+    doRequest({
+      duration: 'duration', // 6 hours
       pubkey: keyPair.publicKey.serialize(),
       email: 'lloyd@example.com'
     }, function(res) {
