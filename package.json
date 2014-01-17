@@ -2,6 +2,14 @@
   "name": "browserid-certifier",
   "description": "A process that creates user certificates described in the BrowserID protocol - for use in your projects",
   "version": "0.0.1",
+  "homepage": "https://github.com/mozilla/browserid-certifier",
+  "bugs": "https://github.com/mozilla/browserid-certifier/issues",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mozilla/browserid-certifier.git"
+  },
+  "license": "MPL 2.0",
+  "author": "Mozilla (https://mozilla.org/)",
   "dependencies": {
     "compute-cluster": "0.0.7",
     "convict": "0.0.6",
